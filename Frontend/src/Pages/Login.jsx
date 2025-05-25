@@ -1,61 +1,10 @@
-// import React from 'react'
-// import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-// import { useDispatch } from 'react-redux';
-// import { addUser } from '../Store/UserSlice';
-
-
-// const Login = () => {
-//     const Navigate = useNavigate();
-//     const [email, setEmail] = useState('');
-//     const [password, setPassword] = useState('');
-
-//     const dispatch = useDispatch();
-
-//     const handleLogin = async () => {
-
-//         try {
-//             const res = await axios.post('http://localhost:3000/login', {
-//                 email, password
-//             }, { withCredentials: "true" });
-//             console.log(res)
-//             dispatch(addUser(res.data.existUser))
-//             if (res.data.message === 'Login successfully') {
-//                 localStorage.setItem("loggedIn", true);
-//                 localStorage.removeItem('exploreEndTime'); 
-//                 Navigate('/');
-//             }
-//         } catch (error) {
-//             console.log(error)
-//         }
-
-//     }
-
-//     return (
-//         <div 
-//             style={{ display: 'flex',flexDirection:'column', justifyContent: 'center',alignItems:'center', gap:'10px' }}
-//         >
-//             <h2>Login Page</h2>
-//             <input  type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='email' />
-
-//             <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='password' />
-
-//             <button onClick={handleLogin}>Login</button>
-//         </div>
-//     )
-// }
-
-// export default Login;
-
-
-
 import black2 from '../Images/black2.jpg';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import { addUser } from '../Store/UserSlice';
+
 
 const Login = () => {
   const containerStyle = {
@@ -142,29 +91,25 @@ const Login = () => {
   };
 
   const Navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('helloworld@gmail.com');
+  const [password, setPassword] = useState('Hello');
 
-    const dispatch = useDispatch();
 
-    const handleLogin = async () => {
+  const dispatch = useDispatch();
 
-        try {
-            const res = await axios.post('http://localhost:3000/login', {
-                email, password
-            }, { withCredentials: "true" });
-            console.log(res)
-            dispatch(addUser(res.data.existUser))
-            if (res.data.message === 'Login successfully') {
-                localStorage.setItem("loggedIn", true);
-                localStorage.removeItem('exploreEndTime'); 
-                Navigate('/');
-            }
-        } catch (error) {
-            console.log(error)
-        }
 
+  const handleLogin = async () => {
+
+    try {
+      const res = await axios.post('http://localhost:4000/login', { email, password }, { withCredentials: "true" });
+      console.log(res)
+      dispatch(addUser(res.data));
+      Navigate('/home')
+    } catch (error) {
+      console.log(error)
     }
+
+  }
 
   return (
     <div style={containerStyle}>
@@ -180,11 +125,11 @@ const Login = () => {
           <h2 style={headerStyle}>Welcome, login to your account.</h2>
           <div>
             <label style={labelStyle}> Email Address:</label>
-            <input type="email" value={email} onChange={(e)=>{setEmail(e.target.value)}} placeholder="name@domain.com" style={inputStyle} />
+            <input type="email" value={email} onChange={(e) => { setEmail(e.target.value) }} placeholder="name@domain.com" style={inputStyle} />
           </div>
           <div>
             <label style={labelStyle}>Password:</label>
-            <input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} placeholder="Your Password" style={inputStyle} />
+            <input type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} placeholder="Your Password" style={inputStyle} />
           </div>
           <button style={buttonStyle} onClick={handleLogin}>Sign In Here</button>
           <div style={footerStyle}>

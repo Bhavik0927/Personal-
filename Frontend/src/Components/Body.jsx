@@ -1,7 +1,32 @@
 import { Outlet } from "react-router-dom"
 import Navbar from "./Navbar"
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { addUser } from "../Store/UserSlice";
+import { useEffect } from "react";
 
 const Body = () => {
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user?.user);
+
+    const fetchUser = async () => {
+        if (user) return;
+
+        try {
+            const res = await axios.get('http://localhost:4000/profile', { withCredentials: true })
+            if (res.data) {
+                dispatch(addUser(res.data)); 
+
+            }
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+    useEffect(() => {
+        fetchUser();
+
+    }, []);
     return (
         <div style={{
             display: "flex",
@@ -9,7 +34,7 @@ const Body = () => {
             minHeight: "100vh"
         }}>
             <Navbar />
-            <div style={{flexGrow:'1',display:"flex",alignItems:"center",justifyContent:"center",backgroundColor:' #f9f9f9'}}>
+            <div style={{ flexGrow: '1', display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: ' #f9f9f9' }}>
                 <Outlet />
             </div>
 
