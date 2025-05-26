@@ -101,7 +101,7 @@ const Login = () => {
   const handleLogin = async () => {
 
     try {
-      const res = await axios.post('http://localhost:4000/login', { email, password }, { withCredentials: "true" });
+      const res = await axios.post('http://localhost:4000/login', { email, password }, { withCredentials: true });
       console.log(res)
       dispatch(addUser(res.data));
       Navigate('/home')

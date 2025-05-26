@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { removeUser } from '../Store/UserSlice';
+import { persistor } from '../Store/Store';
 
 
 const Navbar = () => {
@@ -14,22 +15,29 @@ const Navbar = () => {
 
 
     const logout = async () => {
-        await axios.post('http://localhost:4000/logout', {}, { withCredentials: true });
-        Navigate('/home');
+        await axios.post('http://localhost:4000/logout', { withCredentials: true });
         dispatch(removeUser());
+        persistor.purge();
+        Navigate('/home');
     }
-   
+
     return (
-        <div style={{ postition: "sticky", display: 'flex', justifyContent: 'space-between', alignItems: "center", height: '50px', padding: '0px 10px', top: "0", zIndex: "1000", backgroundColor: "#fff" }}> 
+        <div style={{ postition: "sticky", display: 'flex', justifyContent: 'space-between', alignItems: "center", height: '50px', padding: '0px 10px', top: "0", zIndex: "1000", backgroundColor: "#fff" }}>
             <div>Cloud</div>
 
 
             {user && <div>Welcome,<span className="font-bold"> {user?.existUser?.firstname || user?.firstname} </span></div>}
 
             <div>
-                {user && <Link to='/login'><button onClick={logout} >Logout</button></Link>}
-                <Link to='/signup'><button >Sign up</button></Link>
-                <Link to='/login'><button >Login</button></Link>
+                {user ?
+                    (<Link to='/login'><button onClick={logout} style={{cursor:'pointer'}} >Logout</button></Link>)
+                    : (
+                        <>
+                            <Link to='/signup'><button style={{cursor:'pointer'}} >Sign up</button></Link>
+                            <Link to='/login'><button style={{cursor:'pointer'}} >Login</button></Link>
+                        </>
+                    )}
+
             </div>
         </div>
     )

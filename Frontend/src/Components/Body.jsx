@@ -8,12 +8,14 @@ import { useEffect } from "react";
 const Body = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user?.user);
+    console.log(user);
 
     const fetchUser = async () => {
         if (user) return;
 
         try {
-            const res = await axios.get('http://localhost:4000/profile', { withCredentials: true })
+            const res = await axios.get('http://localhost:4000/profile', { withCredentials: true });
+            console.log(res.data);
             if (res.data) {
                 dispatch(addUser(res.data)); 
 
