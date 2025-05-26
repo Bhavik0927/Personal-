@@ -5,6 +5,8 @@ import connectDB from './db.js';
 import dotenv from 'dotenv';
 import authRouter from './Routes/Authentication.js'
 import profileRoute from './Routes/Profile.js';
+import blogRoute from './Routes/Blogs.js';
+import { AuthMiddleware } from './utils/AuthMiddleware.js';
 
 dotenv.config();
 
@@ -22,6 +24,7 @@ app.use(cookieParser());
 
 app.use('/',authRouter);
 app.use('/',profileRoute);
+app.use('/',AuthMiddleware ,blogRoute);
 
 app.listen(PORT, () => {
     connectDB();

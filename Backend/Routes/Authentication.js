@@ -40,7 +40,7 @@ authRouter.post('/login', async (req, res) => {
     const comparePassword = await bcrypt.compare(password, existUser.password);
 
     if (comparePassword) {
-        const token = await jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: '1d' });
+        const token = await jwt.sign({  _id: existUser._id}, process.env.SECRET_KEY, { expiresIn: '1d' });
 
         res.cookie("token", token, {
             httpOnly: true,
@@ -48,7 +48,7 @@ authRouter.post('/login', async (req, res) => {
              // or 'None' if cross-site
             maxAge: 24 * 60 * 60 * 1000 // 1 day});
         })
-        res.status(200).json({ message: "Login successfully", existUser });
+        res.status(200).json({ message: "Login successfully", token:token ,existUser });
     }
 
 })
