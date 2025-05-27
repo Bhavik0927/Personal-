@@ -2,12 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addBlog } from "../Store/BlogSlice";
-
+import { useNavigate } from "react-router-dom";
+import './home.css';
 
 const Home = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user); // user is an array
-    // console.log("On Home page => ", user);
+    const Navigate = useNavigate();
+
 
     const [data, setData] = useState([]);
 
@@ -33,24 +35,25 @@ const Home = () => {
     }, [user]);
 
     return (
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', overflow: 'hidden' }}>
+
             {
                 user ? (
                     data.length > 0 ? (
                         <>
-                            <div style={{ display: 'flex', gap: '5px', padding: '2px' }}>
-
+                            <button onClick={() => Navigate('/card')} className="Add_blog">Add Blog</button>
+                            <div className="card_container">
                                 {
                                     data.map((e, _) => {
                                         return (
-                                            <div key={e.id} style={{ width: '300px', height: '315px', border: '1px solid grey', borderRadius: '10px', padding: '10px' }}>
-                                                <div>
-                                                    <h2>{e.title}</h2>
+                                            <div key={e._id} className="card" >
+                                                <div > <h2>{e.title}</h2> </div>
+
+                                                <div style={{ display: 'flex', flexWrap: 'wrap', wordWrap: 'break-word', }}>
+                                                    <p style={{}}>{e.blog}</p>
                                                 </div>
-                                                <div>
-                                                    <p>{e.blog}</p>
-                                                </div>
-                                                <div style={{ position: 'absolute', bottom: '30px' }}>
+                                                
+                                                <div className="name_date_box" >
                                                     <h3>{e.createdBy.firstname} {e.createdBy.lastname}</h3>
                                                     <h4>{new Date(e.createdAt).toLocaleDateString('en-CA')}</h4>
                                                 </div>
@@ -59,7 +62,7 @@ const Home = () => {
                                     })
                                 }
                             </div>
-                            <button>  </button>
+
                         </>
                     ) : (
                         <h2>Now i can </h2>

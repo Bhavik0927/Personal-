@@ -30,13 +30,9 @@ const Body = () => {
 
     }, []);
     return (
-        <div style={{
-            display: "flex",
-            flexDirection: "column",
-            minHeight: "100vh"
-        }}>
+        <div style={{ display: "flex",flexDirection: "column", minHeight: "100vh" }}>
             <Navbar />
-            <div style={{ flexGrow: '1',  backgroundColor: ' #f9f9f9' }}>
+            <div style={{ flexGrow: '1',padding:'30px'}}>
                 <Outlet />
             </div>
 

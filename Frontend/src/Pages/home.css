@@ -1,0 +1,30 @@
+.Add_blog {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 4px 3px;
+  cursor: pointer;
+}
+
+.card_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: start;
+  gap: 10px;
+  padding: 2px;
+}
+
+.card {
+  width: 300px;
+  height: 315px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 15px;
+  position: relative;
+}
+
+.name_date_box{
+    position: absolute; 
+    bottom: 30px;
+}

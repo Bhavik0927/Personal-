@@ -1,15 +1,18 @@
-import React from 'react'
+import {useState,useRef} from 'react'
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { removeUser } from '../Store/UserSlice';
 import { persistor } from '../Store/Store';
-import { removeBlog } from '../Store/BlogSlice';
+import './Navbar.css';
 
 
 const Navbar = () => {
     const user = useSelector((store) => store.user?.user);
+    const [dropdownOpen, setDropdownOpen] = useState(false)
+    const dropdownRef = useRef(null)
+
     const Navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -17,26 +20,50 @@ const Navbar = () => {
     const logout = async () => {
         await axios.post('http://localhost:4000/logout', { withCredentials: true });
         dispatch(removeUser());
-        dispatch(removeBlog());
         persistor.purge();
         Navigate('/home');
     }
 
     return (
-        <div style={{ postition: "sticky", display: 'flex', justifyContent: 'space-between', alignItems: "center", height: '50px', padding: '0px 10px', top: "0", zIndex: "1000", backgroundColor: "#fff" }}>
-            <div>Cloud</div>
-
-
-            {user && <div>Welcome,<span className="font-bold"> {user?.existUser?.firstname || user?.firstname} </span></div>}
-
+        <div className='navbar_container'>
+            <div onClick={() =>{Navigate('/home')}}>Cloud</div>
             <div>
                 {user ?
-                    (<Link to='/login'><button onClick={logout} style={{ cursor: 'pointer' }} >Logout</button></Link>)
+
+                    (
+                        <div >
+                            <div className="user-dropdown" ref={dropdownRef}>
+                                <p>Welcome {user?.existUser?.firstname || user?.firstname}</p>
+                                <img
+                                    src="https://github.com/shadcn.png"
+                                    alt="User"
+                                    className="user-icon"
+                                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                                />
+                                {dropdownOpen && (
+                                    <div className="dropdown-menu">
+                                        <button onClick={() => { Navigate("/myblogs"); setDropdownOpen(false); }}>
+                                            My Blogs
+                                        </button>
+                                        <hr />
+                                         <button onClick={() => { Navigate("/myblogs"); setDropdownOpen(false); }}>
+                                            Edit profile
+                                        </button>
+                                        <hr />
+                                        <button onClick={() => { logout(); setDropdownOpen(false); }}>
+                                            Logout
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                            
+                        </div>
+                    )
                     : (
-                        <>
-                            <Link to='/signup'><button style={{ cursor: 'pointer' }} >Sign up</button></Link>
-                            <Link to='/login'><button style={{ cursor: 'pointer' }} >Login</button></Link>
-                        </>
+                        <div className='profile_btns'>
+                            <Link to='/signup'><button className='signup_btn' >Sign up</button></Link>
+                            <Link to='/login'><button className='login_btn' >Login</button></Link>
+                        </div>
                     )}
 
             </div>
