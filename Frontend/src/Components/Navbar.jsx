@@ -5,11 +5,11 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { removeUser } from '../Store/UserSlice';
 import { persistor } from '../Store/Store';
+import { removeBlog } from '../Store/BlogSlice';
 
 
 const Navbar = () => {
     const user = useSelector((store) => store.user?.user);
-    console.log(user);
     const Navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -17,6 +17,7 @@ const Navbar = () => {
     const logout = async () => {
         await axios.post('http://localhost:4000/logout', { withCredentials: true });
         dispatch(removeUser());
+        dispatch(removeBlog());
         persistor.purge();
         Navigate('/home');
     }
@@ -30,11 +31,11 @@ const Navbar = () => {
 
             <div>
                 {user ?
-                    (<Link to='/login'><button onClick={logout} style={{cursor:'pointer'}} >Logout</button></Link>)
+                    (<Link to='/login'><button onClick={logout} style={{ cursor: 'pointer' }} >Logout</button></Link>)
                     : (
                         <>
-                            <Link to='/signup'><button style={{cursor:'pointer'}} >Sign up</button></Link>
-                            <Link to='/login'><button style={{cursor:'pointer'}} >Login</button></Link>
+                            <Link to='/signup'><button style={{ cursor: 'pointer' }} >Sign up</button></Link>
+                            <Link to='/login'><button style={{ cursor: 'pointer' }} >Login</button></Link>
                         </>
                     )}
 
@@ -43,4 +44,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default Navbar;

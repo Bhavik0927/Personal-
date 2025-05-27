@@ -1,21 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './UserSlice';
+import blogReducer from './BlogSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage
 import { combineReducers } from 'redux';
-
-// import { version } from 'mongoose';
 
 const persistConfig  = {
     key:'root',
     storage,
     version:1,
-    whitelist:['user']
+    
 }
 
 
 const rootReducer = combineReducers({
-    user:userReducer
+    user:userReducer,
+    blog:blogReducer
 })
 
 

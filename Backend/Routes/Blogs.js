@@ -23,8 +23,14 @@ blogRoute.post('/create', async (req, res) => {
     res.status(202).json({ data: newBlog });
 });
 
+const requireAuth = (req, res, next) => {
+    if (!req.user) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+    next();
+};
 
-blogRoute.get('/view', async (req, res) => {
+blogRoute.get('/view', requireAuth ,async (req, res) => {
     try {
         const blogs = await Blog.find().populate('createdBy');
 

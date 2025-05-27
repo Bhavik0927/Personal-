@@ -8,14 +8,14 @@ import { useEffect } from "react";
 const Body = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user?.user);
-    console.log(user);
+    // console.log(user);
 
     const fetchUser = async () => {
         if (user) return;
 
         try {
             const res = await axios.get('http://localhost:4000/profile', { withCredentials: true });
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data) {
                 dispatch(addUser(res.data)); 
 
@@ -36,7 +36,7 @@ const Body = () => {
             minHeight: "100vh"
         }}>
             <Navbar />
-            <div style={{ flexGrow: '1', display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: ' #f9f9f9' }}>
+            <div style={{ flexGrow: '1',  backgroundColor: ' #f9f9f9' }}>
                 <Outlet />
             </div>
 
