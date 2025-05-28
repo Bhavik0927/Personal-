@@ -45,4 +45,19 @@ blogRoute.get('/view', requireAuth ,async (req, res) => {
     }
 })
 
+blogRoute.get('/myblog', async(req,res) =>{
+    try {
+        const userId = req.user._id;
+        if(!userId){
+            res.status(402).send("user is not login..login first")
+        }
+        const response =await Blog.find({createdBy: userId});
+        if(!response || response.length === 0){
+            res.status(404).send("Blogs are not created yet...");
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        console.log(error.message);
+    }
+})
 export default blogRoute;
