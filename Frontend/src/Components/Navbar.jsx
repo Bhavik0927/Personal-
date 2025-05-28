@@ -18,7 +18,7 @@ const Navbar = () => {
 
 
     const logout = async () => {
-        await axios.post('http://localhost:4000/logout', { withCredentials: true });
+        await axios.post('http://localhost:4000/logout',null, { withCredentials: true });
         dispatch(removeUser());
         persistor.purge();
         Navigate('/home');
