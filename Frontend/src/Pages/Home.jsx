@@ -47,6 +47,8 @@ const Home = () => {
                                     data.map((e, _) => {
                                         return (
                                             <div key={e._id} className="card" >
+
+                                                
                                                 <div > <h2>{e.title}</h2> </div>
 
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', wordWrap: 'break-word', }}>

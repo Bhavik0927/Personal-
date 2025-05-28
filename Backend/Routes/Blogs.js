@@ -65,7 +65,6 @@ blogRoute.get('/myblog', async (req, res) => {
 blogRoute.delete('/:id', async (req, res) => {
     try {
         const blog = await Blog.findById(req.params.id);
-        console.log(blog);
         if (!blog) return res.status(404).json({ message: 'Blog not found' });
         if (blog.createdBy.toString() !== req.user._id) {
             return res.status(404).json({ message: 'User is not authorized' })

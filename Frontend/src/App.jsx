@@ -7,6 +7,7 @@ import Signup from './Pages/Signup';
 import { Provider } from 'react-redux';
 import store from './Store/Store';
 import AddBlogCard from './Components/AddBlogCard';
+import Myblogs from './Pages/Myblogs';
 
 
 
@@ -19,6 +20,7 @@ const App = () => {
           <Route path='/' element={<Body />}>
             <Route path='/home' element={<Home />} />
             <Route path='/card' element={<AddBlogCard />} />
+            <Route path='/myblogs' element={<Myblogs />} />
             <Route path='/about' element={<About />} />
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />
