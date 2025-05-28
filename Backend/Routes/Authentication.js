@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
- const authRouter = express.Router();
+const authRouter = express.Router();
 
 authRouter.post("/signup", async (req, res) => {
 
@@ -33,28 +33,33 @@ authRouter.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     const existUser = await User.findOne({ email });
-    
+
     if (!existUser) {
         return res.status(404).send({ message: "User is Not Exists" })
     }
     const comparePassword = await bcrypt.compare(password, existUser.password);
 
     if (comparePassword) {
-        const token = await jwt.sign({  _id: existUser._id}, process.env.SECRET_KEY, { expiresIn: '1d' });
+        const token = await jwt.sign({ _id: existUser._id }, process.env.SECRET_KEY, { expiresIn: '1d' });
 
         res.cookie("token", token, {
             httpOnly: true,
             secure: false, // set to true in production with HTTPS
-             // or 'None' if cross-site
+            sameSite: 'lax',// or 'None' if cross-site
             maxAge: 24 * 60 * 60 * 1000 // 1 day});
         })
-        res.status(200).json({ message: "Login successfully", token:token ,existUser });
+        res.status(200).json({ message: "Login successfully", token: token, existUser });
     }
 
 })
 
 authRouter.post('/logout', async (req, res) => {
-    res.clearCookie('token');
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: false,         // Same as in login
+        sameSite: 'lax' ,
+        path: '/'       // Default value, unless you specify otherwise in login
+    });
     res.send("Logout Successfully...");
 });
 
