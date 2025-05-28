@@ -10,6 +10,7 @@ import './Navbar.css';
 
 const Navbar = () => {
     const user = useSelector((store) => store.user?.user);
+    console.log(user);
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const dropdownRef = useRef(null)
 
@@ -26,7 +27,7 @@ const Navbar = () => {
 
     return (
         <div className='navbar_container'>
-            <div onClick={() =>{Navigate('/home')}}>Cloud</div>
+            <div onClick={() =>{Navigate('/home')}} style={{cursor:'pointer'}}>Cloud</div>
             <div>
                 {user ?
 
@@ -35,7 +36,7 @@ const Navbar = () => {
                             <div className="user-dropdown" ref={dropdownRef}>
                                 <p>Welcome {user?.existUser?.firstname || user?.firstname}</p>
                                 <img
-                                    src="https://github.com/shadcn.png"
+                                    src={user?.existUser?.profilePic}
                                     alt="User"
                                     className="user-icon"
                                     onClick={() => setDropdownOpen(!dropdownOpen)}

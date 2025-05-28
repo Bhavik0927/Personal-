@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import './home.css';
 
 const Home = () => {
+    
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user); // user is an array
     const Navigate = useNavigate();
@@ -52,11 +53,11 @@ const Home = () => {
                                                 <div > <h2>{e.title}</h2> </div>
 
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', wordWrap: 'break-word', }}>
-                                                    <p style={{}}>{e.blog}</p>
+                                                    <p>{e.blog}</p>
                                                 </div>
                                                 
                                                 <div className="name_date_box" >
-                                                    <h3>{e.createdBy.firstname} {e.createdBy.lastname}</h3>
+                                                    <h3>{e?.createdBy?.firstname} {e?.createdBy?.lastname}</h3>
                                                     <h4>{new Date(e.createdAt).toLocaleDateString('en-CA')}</h4>
                                                 </div>
                                             </div>

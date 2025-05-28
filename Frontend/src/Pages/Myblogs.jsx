@@ -18,7 +18,7 @@ const Myblogs = () => {
 
     const handleDelete = async (blogId) => {
         try {
-            await axios.delete(`http://localhost:4000/${blogId}`,{withCredentials: true});
+            await axios.delete(`http://localhost:4000/${blogId}`, { withCredentials: true });
             setData((prev) => prev.filter((blog) => blog._id !== blogId));
             setDeletedId(null);
         } catch (error) {
@@ -31,7 +31,7 @@ const Myblogs = () => {
     return (
         <div className="card_container">
 
-            {
+            {data.length > 0 ? (
                 data?.map((e, _) => {
                     return (
                         <div key={e._id} className="card" >
@@ -68,6 +68,12 @@ const Myblogs = () => {
                         </div>
                     )
                 })
+            ) : (
+                <div className="no-blog"> 
+                    <h1>You don't have any blog...</h1>
+                </div>
+            )
+
             }
         </div>
     )
