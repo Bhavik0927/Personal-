@@ -4,11 +4,14 @@ import { useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import './myblogs.css';
+import { useNavigate } from "react-router-dom";
 
 const Myblogs = () => {
 
     const [data, setData] = useState([]);
     const [deletedId, setDeletedId] = useState(null);
+
+    const Navigate = useNavigate();
 
     const fetchBlogs = async () => {
         const response = await axios.get('http://localhost:4000/myblog', { withCredentials: true });
@@ -39,7 +42,7 @@ const Myblogs = () => {
                                 <h2>{e.title}</h2>
                                 <div style={{ fontSize: '25px', display: 'flex', gap: '10px', cursor: 'pointer' }}>
                                     <MdDelete onClick={() => setDeletedId(e._id)} />
-                                    <RiEdit2Fill />
+                                    <RiEdit2Fill onClick={() => Navigate(`/editBlog/${e._id}`)} />
                                 </div>
                                 {
                                     deletedId === e._id && (

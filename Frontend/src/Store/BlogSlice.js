@@ -7,10 +7,10 @@ const blogSlice = createSlice({
     },
     reducers:{
         addBlog:(state,action) =>{
-            state.user= action.payload;
+            state.blog= action.payload;
         },
         removeBlog:(state,action) =>{
-            state.user = null;
+            state.blog = null;
         }
     }
 })

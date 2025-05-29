@@ -1,21 +1,39 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { IoClose } from "react-icons/io5";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './AddBlogCard.css';
+import { useDispatch } from 'react-redux';
+import { addBlog } from '../Store/BlogSlice';
+
 
 const AddBlogCard = () => {
 
-    const [isOpen, setIsOpen] = useState(false);
     const [title, setTitle] = useState('');
     const [blog, setBlog] = useState('');
+    const [blogImage, setBlogImage] = useState(null);
+
 
     const Navigate = useNavigate();
+    const dispatch = useDispatch();
 
 
-    const AddBlog = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('blog', blog);
+        formData.append('blogImage', blogImage);
+
         try {
-            const res = await axios.post('http://localhost:4000/create', { title, blog }, { withCredentials: true, });
+            const res = await axios.post('http://localhost:4000/create', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }, withCredentials: true,
+            });
+
             console.log(res);
+            // dispatch(addBlog(res))
             setTitle('');
             setBlog('');
             Navigate('/home')
@@ -26,35 +44,48 @@ const AddBlogCard = () => {
     }
     return (
         <div className="container"  >
-
-
-
             <div className="modal-overlay">
                 <div className="modal-content">
-                    <div id='close-card' onClick={() => Navigate('/home')}>
-                        <IoClose id='colse-icon' />
-                    </div>
-                    <div id="title_area">
-                        <label htmlFor="title">Title</label>
-                        <input
-                            id="title"
-                            type="text"
-                            placeholder="Title for blog"
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                    </div>
-                    <div id="blog_area">
-                        <label htmlFor="textarea">Blog</label>
 
-                        <textarea
-                            id="textarea"
-                            placeholder="Write an blog"
-                            onChange={(e) => setBlog(e.target.value)}
+                    <form onSubmit={handleSubmit}>
+                        <div id='close-card' onClick={() => Navigate('/home')}>
+                            <IoClose id='colse-icon' />
+                        </div>
+                        <div id="title_area">
+                            <label htmlFor="title">Title</label>
+                            <input
+                                id="title"
+                                type="text"
+                                placeholder="Title for blog"
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+                        </div>
+                        <div id="blog_area">
+                            <label htmlFor="textarea">Blog</label>
+
+                            <textarea
+                                id="textarea"
+                                placeholder="Write an blog"
+                                onChange={(e) => setBlog(e.target.value)}
+                            />
+                        </div>
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                                setBlogImage(e.target.files[0]);
+                                setPreview(URL.createObjectURL(e.target.files[0]));
+                            }}
+                            className={{ marginBottom: "10px", color: "#fff" }}
                         />
-                    </div>
-                    <div className='close-area'>
-                        <button className="close-btn" onClick={AddBlog}>submit</button>
-                    </div>
+                        
+
+                        <div className='close-area'>
+                            <button className="close-btn" type='submit'>submit</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
 

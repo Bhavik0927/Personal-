@@ -2,14 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addBlog } from "../Store/BlogSlice";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import './home.css';
 
 const Home = () => {
-    
+
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user.user); // user is an array
-    const Navigate = useNavigate();
+    const user = useSelector((state) => state.user.user);
+    const blog = useSelector((state) => state.blog.blog);
 
 
     const [data, setData] = useState([]);
@@ -19,8 +19,8 @@ const Home = () => {
             const res = await axios.get('http://localhost:4000/view', {
                 withCredentials: true,
             });
-            setData(res.data.data);
-            dispatch(addBlog(res.data.data));
+            setData(res?.data?.data);
+            dispatch(addBlog(res?.data?.data));
             console.log(res.data.data);
         } catch (error) {
             console.log("Error fetching blogs:", error);
@@ -33,49 +33,62 @@ const Home = () => {
         } else {
             setData([]); // clear blogs when user logs out
         }
-    }, [user]);
+    }, [user, blog]);
 
     return (
-        <div style={{ position: 'relative', overflow: 'hidden' }}>
-
+        <div>
             {
                 user ? (
                     data.length > 0 ? (
-                        <>
-                            <button onClick={() => Navigate('/card')} className="Add_blog">Add Blog</button>
-                            <div className="card_container">
-                                {
-                                    data.map((e, _) => {
-                                        return (
-                                            <div key={e._id} className="card" >
+                        <div style={{ display: 'flex' }}>
+                            <div style={{ position: 'relative', overflow: 'hidden', width: '70%' }}>
 
-                                                
-                                                <div > <h2>{e.title}</h2> </div>
+                                <div className="card_container">
+                                    {
+                                        data.map((e, index) => {
+                                            const cardClass = index === 0 ? "card full-width" : "card";
+                                            const imageClass = index === 0 ? 'image full' : "blog-image";
+                                            return (
+                                                <div key={e._id} className={cardClass}>
+                                                    <div>
+                                                        <img src={e.blogImage} alt="blog_image" className={imageClass} />
+                                                    </div>
+                                                    <div className="Second-card-container">
+                                                        <div>
+                                                            <h2>{e.title}</h2>
+                                                        </div>
+                                                        <div>
+                                                            <p>{e.blog}</p>
+                                                        </div>
+                                                        <div>
+                                                            <button>Read More </button>
+                                                        </div>
 
-                                                <div style={{ display: 'flex', flexWrap: 'wrap', wordWrap: 'break-word', }}>
-                                                    <p>{e.blog}</p>
+
+                                                        <div className="name_date_box">
+                                                            <h3>{e?.createdBy?.firstname} {e?.createdBy?.lastname}</h3>
+                                                            <h4>{new Date(e.createdAt).toLocaleDateString('en-CA')}</h4>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                
-                                                <div className="name_date_box" >
-                                                    <h3>{e?.createdBy?.firstname} {e?.createdBy?.lastname}</h3>
-                                                    <h4>{new Date(e.createdAt).toLocaleDateString('en-CA')}</h4>
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                }
+                                            )
+                                        })
+                                    }
+                                </div>
                             </div>
-
-                        </>
+                            <div style={{ width: '30%' }}>
+                                <h2>Right side portion</h2>
+                            </div>
+                        </div>
                     ) : (
-                        <h2>Now i can </h2>
+                        <h2>No blogs found. Try adding one!</h2>
                     )
                 ) : (
-                    <h2>Please login to view content</h2>
+                    <h1>Please login</h1>
                 )
             }
         </div>
     );
-};
+}
 
 export default Home;

@@ -1,4 +1,4 @@
-import {useState,useRef} from 'react'
+import { useState, useRef } from 'react'
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -19,7 +19,7 @@ const Navbar = () => {
 
 
     const logout = async () => {
-        await axios.post('http://localhost:4000/logout',null, { withCredentials: true });
+        await axios.post('http://localhost:4000/logout', null, { withCredentials: true });
         dispatch(removeUser());
         persistor.purge();
         Navigate('/home');
@@ -27,12 +27,14 @@ const Navbar = () => {
 
     return (
         <div className='navbar_container'>
-            <div onClick={() =>{Navigate('/home')}} style={{cursor:'pointer'}}>Cloud</div>
+            <div onClick={() => { Navigate('/home') }} style={{ cursor: 'pointer' }}>Cloud</div>
+            <button onClick={() => Navigate('/card')} className="Add_blog">Add Blog</button>
             <div>
                 {user ?
 
                     (
                         <div >
+
                             <div className="user-dropdown" ref={dropdownRef}>
                                 <p>Welcome {user?.existUser?.firstname || user?.firstname}</p>
                                 <img
@@ -47,7 +49,7 @@ const Navbar = () => {
                                             My Blogs
                                         </button>
                                         <hr />
-                                         <button onClick={() => { Navigate("/myblogs"); setDropdownOpen(false); }}>
+                                        <button onClick={() => { Navigate("/myblogs"); setDropdownOpen(false); }}>
                                             Edit profile
                                         </button>
                                         <hr />
@@ -57,7 +59,7 @@ const Navbar = () => {
                                     </div>
                                 )}
                             </div>
-                            
+
                         </div>
                     )
                     : (
