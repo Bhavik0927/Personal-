@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+// import isEmail from 'validator/es/lib/isEmail.js';
+// import isStrongPassword from 'validator/lib/isStrongPassword';
 
 const userSchema = new mongoose.Schema(
     {
@@ -13,18 +15,30 @@ const userSchema = new mongoose.Schema(
         email: {
             type: "string",
             required: true,
-            unique: 'true'
+            unique: 'true',
+            lowercase: true,
+            trim: true,
+            // validate(value) {
+            //     if (!isEmail(value)) {
+            //         throw new Error("Email is not valid" + value);
+            //     }
+            // }
         },
         password: {
             type: "string",
             required: true,
-            unique: 'true'
+            unique: 'true',
+            // validate(value) {
+            //     if (!isStrongPassword(value)) {
+            //         throw new Error("Password is not Strong" + value);
+            //     }
+            // }
         },
         profilePic: {
             type: String,
             required: true,
         },
-    },{timestamps:true}
+    }, { timestamps: true }
 );
 
 const User = mongoose.model('User', userSchema);

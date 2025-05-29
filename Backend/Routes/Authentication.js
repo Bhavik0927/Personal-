@@ -17,7 +17,7 @@ authRouter.post("/signup", upload.single('profilePic'), async (req, res) => {
 
     try {
         const result = await uploadToCloudinary(req.file.buffer, 'profile_pics');
-        console.log('Uploaded URL:', result.secure_url);
+        // console.log('Uploaded URL:', result.secure_url);
 
         const existUser = await User.findOne({ email });
 
