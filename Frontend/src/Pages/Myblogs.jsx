@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { RiEdit2Fill } from "react-icons/ri";
 import './myblogs.css';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Myblogs = () => {
 
@@ -24,6 +25,7 @@ const Myblogs = () => {
             await axios.delete(`http://localhost:4000/${blogId}`, { withCredentials: true });
             setData((prev) => prev.filter((blog) => blog._id !== blogId));
             setDeletedId(null);
+            toast.success("deleted successfully...");
         } catch (error) {
             console.log(error);
         }

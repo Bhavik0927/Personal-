@@ -6,6 +6,7 @@ import axios from 'axios';
 import { removeUser } from '../Store/UserSlice';
 import { persistor } from '../Store/Store';
 import './Navbar.css';
+import { toast } from 'react-toastify';
 
 
 const Navbar = () => {
@@ -22,6 +23,7 @@ const Navbar = () => {
         await axios.post('http://localhost:4000/logout', null, { withCredentials: true });
         dispatch(removeUser());
         persistor.purge();
+        toast.success('Logout successfully...');
         Navigate('/home');
     }
 

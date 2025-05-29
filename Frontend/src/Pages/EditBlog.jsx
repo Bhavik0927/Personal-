@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 // import { addBlog } from '../Store/BlogSlice';
 
 const EditBlog = () => {
@@ -55,7 +56,7 @@ const EditBlog = () => {
                 blogImage: imageUrl
             }, { withCredentials: true });
 
-            alert("data is updated");
+            toast.success("blog-data is updated...");
             Navigate('/myblogs')
             console.log(res);
         } catch (error) {

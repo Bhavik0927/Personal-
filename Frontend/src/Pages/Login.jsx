@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../Store/UserSlice';
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
@@ -94,7 +95,6 @@ const Login = () => {
   const [email, setEmail] = useState('helloworld@gmail.com');
   const [password, setPassword] = useState('Hello');
 
-
   const dispatch = useDispatch();
 
 
@@ -102,11 +102,13 @@ const Login = () => {
 
     try {
       const res = await axios.post('http://localhost:4000/login', { email, password }, { withCredentials: true });
-      console.log(res)
+      // console.log(res)
       dispatch(addUser(res.data));
+      toast.success(" Login Successfully");
       Navigate('/home')
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      toast.error('Invalid Credentials...');
     }
 
   }

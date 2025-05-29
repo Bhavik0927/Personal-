@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addBlog } from "../Store/BlogSlice";
+
 // import { useNavigate } from "react-router-dom";
 import './home.css';
 
@@ -21,7 +22,7 @@ const Home = () => {
             });
             setData(res?.data?.data);
             dispatch(addBlog(res?.data?.data));
-            console.log(res.data.data);
+            // console.log(res.data.data);
         } catch (error) {
             console.log("Error fetching blogs:", error);
         }

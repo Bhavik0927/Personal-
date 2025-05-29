@@ -2,7 +2,7 @@ import './Signup.css';
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from 'react-toastify';
 
 const Signup = () => {
     const [firstname, setFirstName] = useState('');
@@ -31,9 +31,11 @@ const Signup = () => {
                 }, withCredentials: "true"
             });
             console.log(res);
+            toast.success("Successfully Sign-up");
             Navigate('/login');
         } catch (error) {
             console.log(error.message);
+            toast.error("Something is wrong");
         }
     };
 
@@ -102,13 +104,13 @@ const Signup = () => {
                         }}
                         className={{ marginBottom: "10px", color: "#fff" }}
                     />
-                    {preview && (
+                    {/* {preview && (
                         <img
                             src={preview}
                             alt="Preview"
                             className={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '50%', marginBottom: 10 }}
                         />
-                    )}
+                    )} */}
                     <button type="submit" className='submitButton'>Create account</button>
 
                     <div className='divider'>or register with</div>

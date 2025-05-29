@@ -3,8 +3,7 @@ import { IoClose } from "react-icons/io5";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './AddBlogCard.css';
-import { useDispatch } from 'react-redux';
-import { addBlog } from '../Store/BlogSlice';
+import { toast } from 'react-toastify';
 
 
 const AddBlogCard = () => {
@@ -13,9 +12,7 @@ const AddBlogCard = () => {
     const [blog, setBlog] = useState('');
     const [blogImage, setBlogImage] = useState(null);
 
-
     const Navigate = useNavigate();
-    const dispatch = useDispatch();
 
 
     const handleSubmit = async (e) => {
@@ -32,14 +29,12 @@ const AddBlogCard = () => {
                 }, withCredentials: true,
             });
 
-            console.log(res);
-            // dispatch(addBlog(res))
-            setTitle('');
-            setBlog('');
+            toast.success('Blog created successfully...');
             Navigate('/home')
 
         } catch (error) {
             console.log(error);
+
         }
     }
     return (
@@ -75,7 +70,7 @@ const AddBlogCard = () => {
                             accept="image/*"
                             onChange={(e) => {
                                 setBlogImage(e.target.files[0]);
-                                setPreview(URL.createObjectURL(e.target.files[0]));
+                                
                             }}
                             className={{ marginBottom: "10px", color: "#fff" }}
                         />
