@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/',authRouter);
-app.use('/',profileRoute);
+app.use('/',AuthMiddleware,profileRoute);
 app.use('/',AuthMiddleware ,blogRoute);
 
 app.listen(PORT, () => {

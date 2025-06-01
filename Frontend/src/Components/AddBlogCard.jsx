@@ -6,17 +6,21 @@ import './AddBlogCard.css';
 import { toast } from 'react-toastify';
 
 
+
 const AddBlogCard = () => {
 
     const [title, setTitle] = useState('');
     const [blog, setBlog] = useState('');
     const [blogImage, setBlogImage] = useState(null);
 
+
     const Navigate = useNavigate();
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+       
+
         const formData = new FormData();
         formData.append('title', title);
         formData.append('blog', blog);
@@ -31,11 +35,11 @@ const AddBlogCard = () => {
 
             toast.success('Blog created successfully...');
             Navigate('/home')
-
+            setLoading(false);
         } catch (error) {
             console.log(error);
 
-        }
+        } 
     }
     return (
         <div className="container"  >
@@ -70,14 +74,16 @@ const AddBlogCard = () => {
                             accept="image/*"
                             onChange={(e) => {
                                 setBlogImage(e.target.files[0]);
-                                
+
                             }}
                             className={{ marginBottom: "10px", color: "#fff" }}
                         />
-                        
+
 
                         <div className='close-area'>
-                            <button className="close-btn" type='submit'>submit</button>
+                            <button className="close-btn" type='submit'  >
+                                submit
+                            </button>
                         </div>
                     </form>
 

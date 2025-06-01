@@ -41,10 +41,14 @@ const Myblogs = () => {
                     return (
                         <div key={e._id} className="card" >
                             <div className="edit-header" style={{ display: 'flex', justifyContent: 'space-between' }} >
-                                <h2>{e.title}</h2>
-                                <div style={{ fontSize: '25px', display: 'flex', gap: '10px', cursor: 'pointer' }}>
-                                    <MdDelete onClick={() => setDeletedId(e._id)} />
-                                    <RiEdit2Fill onClick={() => Navigate(`/editBlog/${e._id}`)} />
+                                <div>
+                                    <img className="blog-image" src={e?.blogImage} alt="" />
+                                    <h2>{e.title}</h2>
+
+                                    <div style={{ fontSize: '25px', display: 'flex', gap: '10px', cursor: 'pointer' }}>
+                                        <MdDelete onClick={() => setDeletedId(e._id)} />
+                                        <RiEdit2Fill onClick={() => Navigate(`/editBlog/${e._id}`)} />
+                                    </div>
                                 </div>
                                 {
                                     deletedId === e._id && (
@@ -74,7 +78,7 @@ const Myblogs = () => {
                     )
                 })
             ) : (
-                <div className="no-blog"> 
+                <div className="no-blog">
                     <h1>You don't have any blog...</h1>
                 </div>
             )

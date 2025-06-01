@@ -9,6 +9,7 @@ import store from './Store/Store';
 import AddBlogCard from './Components/AddBlogCard';
 import Myblogs from './Pages/Myblogs';
 import EditBlog from './Pages/EditBlog';
+import EditProfile from './Pages/EditProfile';
 
 
 
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='/' element={<Body />}>
             <Route path='/home' element={<Home />} />
             <Route path='/card' element={<AddBlogCard />} />
+            <Route path='/edit-profile' element={<EditProfile />} />
             <Route path='/myblogs' element={<Myblogs />} />
             <Route path='/editblog/:id' element={<EditBlog />} />
             <Route path='/about' element={<About />} />

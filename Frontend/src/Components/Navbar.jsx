@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 
 const Navbar = () => {
     const user = useSelector((store) => store.user?.user);
-    console.log(user);
+    console.log(user)
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const dropdownRef = useRef(null)
 
@@ -40,7 +40,7 @@ const Navbar = () => {
                             <div className="user-dropdown" ref={dropdownRef}>
                                 <p>Welcome {user?.existUser?.firstname || user?.firstname}</p>
                                 <img
-                                    src={user?.existUser?.profilePic}
+                                    src={user?.existUser?.profilePic || user?.profilePic }
                                     alt="User"
                                     className="user-icon"
                                     onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -51,7 +51,7 @@ const Navbar = () => {
                                             My Blogs
                                         </button>
                                         <hr />
-                                        <button onClick={() => { Navigate("/myblogs"); setDropdownOpen(false); }}>
+                                        <button onClick={() => { Navigate("/edit-profile"); setDropdownOpen(false); }}>
                                             Edit profile
                                         </button>
                                         <hr />
