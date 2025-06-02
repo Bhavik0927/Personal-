@@ -1,17 +1,15 @@
-import './Signup.css';
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import '../Pages/Signup.css';
 
 const Signup = () => {
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const [profilePic, setProfilePic] = useState(null);
-    const [preview, setPreview] = useState(null);
 
     const Navigate = useNavigate();
 
@@ -40,87 +38,136 @@ const Signup = () => {
     };
 
     return (
-        <div className='container'>
-            {/* Left Panel */}
-            <div className='leftPanel'>
-                <div className='logo'>AMU</div>
-                <button className='backButton'>Back to website →</button>
-                <div className='imageText'>
-                    <h2 className='caption'>Capturing Moments, <br />Creating Memories</h2>
+        // <div className="signup-container">
+
+        //     <form onSubmit={handleSubmit} className="signup-form">
+        //         <h2 className='title'>Create an account</h2>
+        //         <p className='loginText'>
+        //             Already have an account? <a href="#" className='link'>Log in</a>
+        //         </p>
+
+        //         <div className='row'>
+        //             <input
+        //                 type="text"
+        //                 placeholder="First name"
+        //                 name="firstName"
+        //                 value={firstname}
+        //                 onChange={(e) => setFirstName(e.target.value)}
+        //                 className='input'
+        //             />
+        //             <input
+        //                 type="text"
+        //                 placeholder="Last name"
+        //                 name="lastname"
+        //                 value={lastname}
+        //                 onChange={}
+        //                 className='input'
+        //             />
+        //         </div>
+
+        //         <input
+        //             type="email"
+        //             placeholder="Email"
+        //             name="email"
+        //             value={email}
+        //             onChange={(e) => setEmail(e.target.value)}
+        //             className='inputFull'
+        //         />
+
+        //         <input
+        //             type="password"
+        //             placeholder="Enter your password"
+        //             name="password"
+        //             value={password}
+        //             onChange={(e) => setPassword(e.target.value)}
+        //             className='inputFull'
+        //         />
+
+        //         <input
+        //             type="file"
+        //             accept="image/*"
+        //             onChange={(e) => {
+        //                 setProfilePic(e.target.files[0]);
+
+        //             }}
+        //             className={{ marginBottom: "10px", color: "#fff" }}
+        //         />
+
+        //         <button type="submit" className='submitButton'>Create account</button>
+
+        //         <div className='divider'>or register with</div>
+
+        //         <div className='socials'>
+        //             <button className='socialBtn'>Google</button>
+        //             <button className='socialBtn'>Apple</button>
+        //         </div>
+        //     </form>
+        // </div>
+        <div className="signup-container">
+            <form className="signup-form" onSubmit={handleSubmit}>
+                <h2>Create Account</h2>
+
+                <div className="form-group">
+                    <label htmlFor="firstName">First Name</label>
+                    <input
+                        type="text"
+                        name="firstName"
+                        id="firstName"
+                        required
+                        value={firstname}
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
                 </div>
-            </div>
 
-            {/* Right Panel */}
-            <div className='rightPanel'>
-                <form onSubmit={handleSubmit} className='form'>
-                    <h2 className='title'>Create an account</h2>
-                    <p className='loginText'>
-                        Already have an account? <a href="#" className='link'>Log in</a>
-                    </p>
+                <div className="form-group">
+                    <label htmlFor="lastName">Last Name</label>
+                    <input
+                        type="text"
+                        name="lastName"
+                        id="lastName"
+                        required
+                        value={lastname}
+                        onChange={(e) => setLastName(e.target.value)}
+                    />
+                </div>
 
-                    <div className='row'>
-                        <input
-                            type="text"
-                            placeholder="First name"
-                            name="firstName"
-                            value={firstname}
-                            onChange={(e) => setFirstName(e.target.value)}
-                            className='input'
-                        />
-                        <input
-                            type="text"
-                            placeholder="Last name"
-                            name="lastname"
-                            value={lastname}
-                            onChange={(e) => setLastName(e.target.value)}
-                            className='input'
-                        />
-                    </div>
-
+                <div className="form-group">
+                    <label htmlFor="email">Email</label>
                     <input
                         type="email"
-                        placeholder="Email"
                         name="email"
+                        id="email"
+                        required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className='inputFull'
                     />
+                </div>
 
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
                     <input
                         type="password"
-                        placeholder="Enter your password"
                         name="password"
+                        id="password"
+                        required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className='inputFull'
                     />
+                </div>
 
+                <div className="form-group">
                     <input
                         type="file"
                         accept="image/*"
                         onChange={(e) => {
                             setProfilePic(e.target.files[0]);
-                            setPreview(URL.createObjectURL(e.target.files[0]));
                         }}
                         className={{ marginBottom: "10px", color: "#fff" }}
                     />
-                    {/* {preview && (
-                        <img
-                            src={preview}
-                            alt="Preview"
-                            className={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '50%', marginBottom: 10 }}
-                        />
-                    )} */}
-                    <button type="submit" className='submitButton'>Create account</button>
+                </div>
 
-                    <div className='divider'>or register with</div>
-
-                    <div className='socials'>
-                        <button className='socialBtn'>Google</button>
-                        <button className='socialBtn'>Apple</button>
-                    </div>
-                </form>
-            </div>
+                <button type="submit" className="submit-btn"> Create Account </button>
+            </form>
         </div>
     );
 };

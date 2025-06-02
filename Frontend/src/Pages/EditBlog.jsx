@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-// import { addBlog } from '../Store/BlogSlice';
 
 const EditBlog = () => {
 
@@ -66,7 +65,7 @@ const EditBlog = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{padding:'20px'}}>
 
             <div id="title_area">
                 <label htmlFor="title">Title</label>

@@ -7,31 +7,32 @@ import Signup from './Pages/Signup';
 import { Provider } from 'react-redux';
 import store from './Store/Store';
 import AddBlogCard from './Components/AddBlogCard';
-import Myblogs from './Pages/Myblogs';
 import EditBlog from './Pages/EditBlog';
-import EditProfile from './Pages/EditProfile';
+import { lazy, Suspense } from 'react';
 
-
+const EditProfile = lazy(() => import('./Pages/EditProfile'));
+const Myblogs = lazy(() => import('./Pages/Myblogs'));
 
 const App = () => {
   return (
 
     <Provider store={store}>
       <Router>
-        <Routes>
-          <Route path='/' element={<Body />}>
-            <Route path='/home' element={<Home />} />
-            <Route path='/card' element={<AddBlogCard />} />
-            <Route path='/edit-profile' element={<EditProfile />} />
-            <Route path='/myblogs' element={<Myblogs />} />
-            <Route path='/editblog/:id' element={<EditBlog />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<Signup />} />
-            <Route path='*' element={<h1>There is No Route</h1>} />
-          </Route>
-        </Routes>
-
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path='/' element={<Body />}>
+              <Route path='/home' element={<Home />} />
+              <Route path='/card' element={<AddBlogCard />} />
+              <Route path='/edit-profile' element={<EditProfile />} />
+              <Route path='/myblogs' element={<Myblogs />} />
+              <Route path='/editblog/:id' element={<EditBlog />} />
+              <Route path='/about' element={<About />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/signup' element={<Signup />} />
+              <Route path='*' element={<h1>There is No Route</h1>} />
+            </Route>
+          </Routes>
+        </Suspense>
       </Router>
     </Provider>
 

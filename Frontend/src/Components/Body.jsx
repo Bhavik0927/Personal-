@@ -32,7 +32,7 @@ const Body = () => {
     return (
         <div style={{ display: "flex",flexDirection: "column", minHeight: "100vh" }}>
             <Navbar />
-            <div style={{ flexGrow: '1',padding:'30px'}}>
+            <div >
                 <Outlet />
             </div>
 

@@ -1,126 +1,67 @@
-.container {
-  display: "flex";
-  width: "100vw";
-  height: "100vh";
-  background-color: "#2e2b3a";
-  color: "#fff";
-  font-family: "sans-serif";
+/* SignupPage.css */
+
+.signup-container {
+  /* min-height: 100vh; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #dbeafe, #ede9fe);
+  padding: 20px;
 }
 
-.leftPanel {
-  flex: 1;
-  background: "url('https://images.unsplash.com/photo-1587502536263-9298c64b0c53')";
-  position: "relative";
-  padding: "30px";
-  display: "flex";
-  flex-direction: "column";
-  justify-content: "space-between";
+.signup-form {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
 }
 
-.logo {
-  font-size: "24px";
-  font-weight: "bold";
+.signup-form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
 }
-.backButton {
-  align-self: "flex-end";
-  padding: "8px 16px";
-  background-color: "#3d3756";
-  color: "#fff";
-  border: "none";
-  border-radius: "20px";
-  cursor: "pointer";
+
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
 }
-imageText {
-  padding-bottom: "40px";
+
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #444;
 }
-caption {
-  font-size: "20px";
-  line-height: "1.5";
-  color: "#fff";
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border-color 0.2s;
 }
-rightPanel {
-  flex: 1;
-  background-color: "#1f1d2b";
-  padding: "60px";
-  display: "flex";
-  align-items: "center";
-  justify-content: "center";
+
+.form-group input:focus {
+  border-color: #6366f1;
+  outline: none;
 }
-form {
-  width: "100%";
-  max-width: "400px";
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-title {
-  font-size: "26px";
-  margin-bottom: "10px";
-}
-loginText {
-  font-size: "14px";
-  margin-bottom: "20px";
-}
-link {
-  color: "#a78bfa";
-  text-decoration: "none";
-}
-row {
-  display: "flex";
-  gap: "10px";
-  margin-bottom: "10px";
-}
-input {
-  flex: 1;
-  padding: "10px";
-  border-radius: "6px";
-  border: "1px solid #555";
-  background-color: "#2e2b3a";
-  color: "#fff";
-}
-inputfull {
-  width: "100%";
-  padding: "10px";
-  border-radius: "6px";
-  border: "1px solid #555";
-  background-color: "#2e2b3a";
-  color: "#fff";
-  margin-bottom: "10px";
-}
-checkboxcontainer {
-  display: "flex";
-  align-items: "center";
-  margin-bottom: "20px";
-  font-size: "14px";
-  gap: "10px";
-}
-checkbox {
-  width: "16px";
-  height: "16px";
-}
-submitbutton {
-  width: "100%";
-  padding: "12px";
-  background-color: "#a78bfa";
-  border: "none";
-  border-radius: "6px";
-  font-weight: "bold";
-  cursor: "pointer";
-  margin-bottom: "15px";
-}
-divider {
-  text-align: "center";
-  margin: "10px 0";
-  color: "#aaa";
-  font-size: "14px";
-}
-socials {
-  display: "flex";
-  gap: "10px";
-}
-socialbtn {
-  flex: 1;
-  padding: "10px";
-  background-color: "#2e2b3a";
-  border: "1px solid #555";
-  color: "#fff";
-  border-radius: "6px";
-  cursor: "pointer";
+
+.submit-btn:hover {
+  background-color: #4f46e5;
 }

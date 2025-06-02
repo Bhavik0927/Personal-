@@ -92,8 +92,8 @@ const Login = () => {
   };
 
   const Navigate = useNavigate();
-  const [email, setEmail] = useState('helloworld@gmail.com');
-  const [password, setPassword] = useState('Hello');
+  const [email, setEmail] = useState('bhaviktembhare2@gmail.com');
+  const [password, setPassword] = useState('Bhavik');
 
   const dispatch = useDispatch();
 

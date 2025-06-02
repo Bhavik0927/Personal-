@@ -10,7 +10,7 @@ const Home = () => {
 
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
-    const blog = useSelector((state) => state.blog.blog);
+    // const blog = useSelector((state) => state.blog.blog);
 
 
     const [data, setData] = useState([]);
@@ -34,7 +34,7 @@ const Home = () => {
         } else {
             setData([]); // clear blogs when user logs out
         }
-    }, [user, blog]);
+    }, [user]);
 
     return (
         <div>
