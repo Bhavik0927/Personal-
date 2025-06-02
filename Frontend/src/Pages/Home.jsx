@@ -2,15 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addBlog } from "../Store/BlogSlice";
-
-// import { useNavigate } from "react-router-dom";
 import './home.css';
+import HomeDesign from "./HomeDesign";
 
 const Home = () => {
 
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
-    // const blog = useSelector((state) => state.blog.blog);
 
 
     const [data, setData] = useState([]);
@@ -37,7 +35,7 @@ const Home = () => {
     }, [user]);
 
     return (
-        <div>
+        <div >
             {
                 user ? (
                     data.length > 0 ? (
@@ -85,7 +83,7 @@ const Home = () => {
                         <h2>No blogs found. Try adding one!</h2>
                     )
                 ) : (
-                    <h1>Please login</h1>
+                    <HomeDesign />
                 )
             }
         </div>

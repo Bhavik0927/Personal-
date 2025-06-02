@@ -7,7 +7,8 @@ import { removeUser } from '../Store/UserSlice';
 import { persistor } from '../Store/Store';
 import './Navbar.css';
 import { toast } from 'react-toastify';
-
+import { RiEditBoxLine } from "react-icons/ri";
+import { IoIosSearch } from "react-icons/io";
 
 const Navbar = () => {
     const user = useSelector((store) => store.user?.user);
@@ -29,18 +30,30 @@ const Navbar = () => {
 
     return (
         <div className='navbar_container'>
-            <div onClick={() => { Navigate('/home') }} style={{ cursor: 'pointer' }}>Cloud</div>
-            <button onClick={() => Navigate('/card')} className="Add_blog">Add Blog</button>
-            <div>
-                {user ?
+            <div onClick={() => { Navigate('/home') }} style={{ cursor: 'pointer' }}>
+                <h1 style={{}}>Connect</h1>
+            </div>
 
-                    (
-                        <div >
+            {user ?
+
+                (
+                    <div className='userlogin' >
+
+                        <div className='search-bar'>
+                            <span className='search-icon'> <IoIosSearch /> </span>
+                            <input type="text" placeholder='search' />
+                        </div>
+
+                        <div className='user-profile'>
+                            <div onClick={() => Navigate('/card')} className='write-container'>
+                                <span className='write-icon'>  <RiEditBoxLine /> </span>
+                                <p> Write </p>
+                            </div>
 
                             <div className="user-dropdown" ref={dropdownRef}>
                                 <p>Welcome {user?.existUser?.firstname || user?.firstname}</p>
                                 <img
-                                    src={user?.existUser?.profilePic || user?.profilePic }
+                                    src={user?.existUser?.profilePic || user?.profilePic}
                                     alt="User"
                                     className="user-icon"
                                     onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -61,17 +74,28 @@ const Navbar = () => {
                                     </div>
                                 )}
                             </div>
-
                         </div>
-                    )
-                    : (
-                        <div className='profile_btns'>
-                            <Link to='/signup'><button className='signup_btn' >Sign up</button></Link>
-                            <Link to='/login'><button className='login_btn' >Login</button></Link>
-                        </div>
-                    )}
 
-            </div>
+                    </div>
+                )
+                : (
+                    <div style={{ width: '35%', }}>
+                        <ul>
+                            <li>
+                                <Link to='/about' className='our_story'>Our Story</Link>
+                            </li>
+                            <li>Write</li>
+                            <li>
+                                <Link to='/signup' className='signup_btn'>Sign up</Link>
+                            </li>
+                            <li>
+                                <Link to='/login' className='login_btn'>Login</Link>
+                            </li>
+                        </ul>
+                    </div>
+                )}
+
+
         </div>
     )
 }
