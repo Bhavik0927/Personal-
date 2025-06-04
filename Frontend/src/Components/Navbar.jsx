@@ -25,13 +25,13 @@ const Navbar = () => {
         dispatch(removeUser());
         persistor.purge();
         toast.success('Logout successfully...');
-        Navigate('/home');
+        Navigate('/');
     }
 
     return (
         <div className='navbar_container'>
             <div onClick={() => { Navigate('/home') }} style={{ cursor: 'pointer' }}>
-                <h1 style={{}}>Connect</h1>
+                <h1 >Connect</h1>
             </div>
 
             {user ?

@@ -31,4 +31,12 @@
 }
 .Image_container {
   margin-top: 2.5rem;
+  display: block;
+}
+
+
+@media (max-width: 768px) {
+  .Image_container {
+    display: none;
+  }
 }

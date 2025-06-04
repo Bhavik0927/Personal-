@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addBlog } from "../Store/BlogSlice";
 import './home.css';
 import HomeDesign from "./HomeDesign";
+import { BsStars } from "react-icons/bs";
+import { CiBookmarkCheck } from "react-icons/ci";
+import Card from "../Components/Card";
 
 const Home = () => {
 
@@ -19,8 +22,8 @@ const Home = () => {
                 withCredentials: true,
             });
             setData(res?.data?.data);
+            console.log(res?.data?.data);
             dispatch(addBlog(res?.data?.data));
-            // console.log(res.data.data);
         } catch (error) {
             console.log("Error fetching blogs:", error);
         }
@@ -39,43 +42,22 @@ const Home = () => {
             {
                 user ? (
                     data.length > 0 ? (
-                        <div style={{ display: 'flex' }}>
-                            <div style={{ position: 'relative', overflow: 'hidden', width: '70%' }}>
-
-                                <div className="card_container">
+                        <div className="main_container">
+                            <div className="left_container">
+                                <div className="Card_container" >
                                     {
-                                        data.map((e, index) => {
-                                            const cardClass = index === 0 ? "card full-width" : "card";
-                                            const imageClass = index === 0 ? 'image full' : "blog-image";
+                                        data.map((e, _) => {
                                             return (
-                                                <div key={e._id} className={cardClass}>
-                                                    <div>
-                                                        <img src={e.blogImage} alt="blog_image" className={imageClass} />
-                                                    </div>
-                                                    <div className="Second-card-container">
-                                                        <div>
-                                                            <h2>{e.title}</h2>
-                                                        </div>
-                                                        <div>
-                                                            <p>{e.blog}</p>
-                                                        </div>
-                                                        <div>
-                                                            <button>Read More </button>
-                                                        </div>
+                                                <div key={e._id} className="card">
+                                                    <Card props={e} />
 
-
-                                                        <div className="name_date_box">
-                                                            <h3>{e?.createdBy?.firstname} {e?.createdBy?.lastname}</h3>
-                                                            <h4>{new Date(e.createdAt).toLocaleDateString('en-CA')}</h4>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             )
                                         })
                                     }
                                 </div>
                             </div>
-                            <div style={{ width: '30%' }}>
+                            <div className="right_container">
                                 <h2>Right side portion</h2>
                             </div>
                         </div>

@@ -105,7 +105,7 @@ const Login = () => {
       // console.log(res)
       dispatch(addUser(res.data));
       toast.success(" Login Successfully");
-      Navigate('/home')
+      Navigate('/')
     } catch (error) {
       console.log(error);
       toast.error('Invalid Credentials...');
