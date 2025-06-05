@@ -2,6 +2,7 @@ import express from 'express';
 import Blog from '../model/blogSchema.js';
 import multer from 'multer';
 import { uploadToCloudinary } from '../utils/Cloudinary.js';
+import User from '../model/userSchema.js';
 
 const blogRoute = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
@@ -109,5 +110,56 @@ blogRoute.put('/blog/:id', async (req, res) => {
         console.log(error);
         res.status(500).json({ success: false, message: 'Server error' });
     }
+});
+
+
+blogRoute.post('/saveblog', async (req, res) => {
+    const userId = req.user._id;
+    const { blogId } = req.body;
+
+    try {
+        const blog = await Blog.findById(blogId);
+        if (!blog) return res.status(404).json({ error: 'Blog not found' });
+
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        if (user.saveBlogs.includes(blog)) {
+            return res.status(400).json({ message: 'Blog already saved' });
+        }
+
+        user.saveBlogs.push(blogId);
+        await user.save();
+
+        res.status(200).json({ message: 'Blog saved successfully', savedBlogs: user.saveBlogs });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Server Error', details: error.message });
+    }
+
+
 })
+
+
+blogRoute.get('/savedBlogs', async (req, res) => {
+    const userId = req.user._id;
+    try {
+        const user = await User.findById(userId).populate({
+            path: 'saveBlogs',
+            populate:{
+                path:'createdBy',
+                select: 'firstname lastname email'
+            }
+        });
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        res.status(200).json({ savedBlogs: user.saveBlogs });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Server Error', details: error.message });
+    }
+
+})
+
+
 export default blogRoute;
