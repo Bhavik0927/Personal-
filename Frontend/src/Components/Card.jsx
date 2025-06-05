@@ -1,8 +1,20 @@
-
 import { BsStars } from "react-icons/bs";
 import { CiBookmarkCheck } from "react-icons/ci";
+import axios from "axios";
+import { toast } from 'react-toastify';
+import '../Pages/home.css';
 
 const Card = ({ props }) => {
+
+    const savedBlog = async () => {
+        try {
+            const response = await axios.post('http://localhost:4000/saveblog', { blogId: props._id }, { withCredentials: true });
+            toast.success(response?.data?.message);
+        } catch (error) {
+            toast.error(error?.message);
+        }
+
+    }
 
     return (
         <>
@@ -24,7 +36,7 @@ const Card = ({ props }) => {
                             day: "2-digit",
                         })}
                     </p>
-                    <span className="bookmark"> <CiBookmarkCheck /> </span>
+                    <span className="bookmark" onClick={() => savedBlog()}> <CiBookmarkCheck /> </span>
                 </div>
             </div>
             <div className="blog_image">

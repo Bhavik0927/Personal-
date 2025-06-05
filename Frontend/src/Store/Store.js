@@ -1,30 +1,32 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './UserSlice';
 import blogReducer from './BlogSlice';
+import saveblogsReducer from './SaveBlogs';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage
 import { combineReducers } from 'redux';
 
-const persistConfig  = {
-    key:'root',
+const persistConfig = {
+    key: 'root',
     storage,
-    version:1,
-    
+    version: 1,
+
 }
 
 
 const rootReducer = combineReducers({
-    user:userReducer,
-    blog:blogReducer
+    user: userReducer,
+    blog: blogReducer,
+    saveblogs: saveblogsReducer
 })
 
 
-const persistedReducer = persistReducer(persistConfig,rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-    reducer:persistedReducer,
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck:false
+        serializableCheck: false
     })
 })
 

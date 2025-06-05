@@ -20,7 +20,6 @@ const Home = () => {
                 withCredentials: true,
             });
             setData(res?.data?.data);
-            console.log(res?.data?.data);
             dispatch(addBlog(res?.data?.data));
         } catch (error) {
             console.log("Error fetching blogs:", error);

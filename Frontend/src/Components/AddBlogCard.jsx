@@ -12,6 +12,7 @@ const AddBlogCard = () => {
     const [title, setTitle] = useState('');
     const [blog, setBlog] = useState('');
     const [blogImage, setBlogImage] = useState(null);
+    const [Loading, setLoading] = useState(false);
 
 
     const Navigate = useNavigate();
@@ -19,8 +20,8 @@ const AddBlogCard = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-       
 
+        setLoading(true);
         const formData = new FormData();
         formData.append('title', title);
         formData.append('blog', blog);
@@ -34,12 +35,12 @@ const AddBlogCard = () => {
             });
 
             toast.success('Blog created successfully...');
-            Navigate('/home')
-            setLoading(false);
+            Navigate('/')
         } catch (error) {
             console.log(error);
-
-        } 
+        } finally {
+            setLoading(false);
+        }
     }
     return (
         <div className="container"  >
@@ -47,7 +48,7 @@ const AddBlogCard = () => {
                 <div className="modal-content">
 
                     <form onSubmit={handleSubmit}>
-                        <div id='close-card' onClick={() => Navigate('/home')}>
+                        <div id='close-card' onClick={() => Navigate('/')}>
                             <IoClose id='colse-icon' />
                         </div>
                         <div id="title_area">
@@ -82,7 +83,7 @@ const AddBlogCard = () => {
 
                         <div className='close-area'>
                             <button className="close-btn" type='submit'  >
-                                submit
+                                {Loading ? 'Loading...' : "Submit"}
                             </button>
                         </div>
                     </form>

@@ -12,6 +12,7 @@ import { lazy, Suspense } from 'react';
 
 const EditProfile = lazy(() => import('./Pages/EditProfile'));
 const Myblogs = lazy(() => import('./Pages/Myblogs'));
+const SaveBlogs = lazy(() => import('./Pages/SaveBlogs'));
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
               <Route path='/edit-profile' element={<EditProfile />} />
               <Route path='/myblogs' element={<Myblogs />} />
               <Route path='/editblog/:id' element={<EditBlog />} />
+              <Route path='/saveblogs'  element={<SaveBlogs />} />
               <Route path='/about' element={<About />} />
               <Route path='/login' element={<Login />} />
               <Route path='/signup' element={<Signup />} />

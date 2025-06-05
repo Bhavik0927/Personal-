@@ -12,7 +12,6 @@ const Login = () => {
     display: 'flex',
     height: '100vh',
     width: '100vw',
-    fontFamily: 'sans-serif',
   };
 
   const leftPanelStyle = {

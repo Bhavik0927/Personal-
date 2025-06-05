@@ -12,7 +12,7 @@ import { IoIosSearch } from "react-icons/io";
 
 const Navbar = () => {
     const user = useSelector((store) => store.user?.user);
-    console.log(user)
+    // console.log(user)
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const dropdownRef = useRef(null)
 
@@ -62,6 +62,10 @@ const Navbar = () => {
                                     <div className="dropdown-menu">
                                         <button onClick={() => { Navigate("/myblogs"); setDropdownOpen(false); }}>
                                             My Blogs
+                                        </button>
+                                        <hr />
+                                        <button onClick={() => { Navigate("/saveblogs"); setDropdownOpen(false); }}>
+                                            Save blogs
                                         </button>
                                         <hr />
                                         <button onClick={() => { Navigate("/edit-profile"); setDropdownOpen(false); }}>
