@@ -30,7 +30,7 @@ const Navbar = () => {
 
     return (
         <div className='navbar_container'>
-            <div onClick={() => { Navigate('/home') }} style={{ cursor: 'pointer' }}>
+            <div onClick={() => { Navigate('/') }} style={{ cursor: 'pointer' }}>
                 <h1 >Connect</h1>
             </div>
 

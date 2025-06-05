@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addBlog } from "../Store/BlogSlice";
 import './home.css';
 import HomeDesign from "./HomeDesign";
-import { BsStars } from "react-icons/bs";
-import { CiBookmarkCheck } from "react-icons/ci";
 import Card from "../Components/Card";
 
 const Home = () => {
@@ -37,6 +35,7 @@ const Home = () => {
         }
     }, [user]);
 
+
     return (
         <div >
             {
@@ -50,7 +49,6 @@ const Home = () => {
                                             return (
                                                 <div key={e._id} className="card">
                                                     <Card props={e} />
-
                                                 </div>
                                             )
                                         })

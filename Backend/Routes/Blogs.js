@@ -7,12 +7,16 @@ const blogRoute = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 blogRoute.post('/create', upload.single('blogImage'), async (req, res) => {
-    const { title, blog } = req.body;
 
     try {
-        const result = await uploadToCloudinary(req.file.buffer, 'blog-pics');
-
+        const { title, blog } = req.body;
         const userId = req.user._id;
+
+        if (!title || !blog || !req.file) {
+            return res.status(400).json({ error: 'Title, blog content, and image are required.' });
+        }
+
+        const result = await uploadToCloudinary(req.file.buffer, 'blog-pics');
 
         if (!title || !blog) {
             return res.status(404).json({ error: 'Every field is mandatory' });
@@ -26,9 +30,10 @@ blogRoute.post('/create', upload.single('blogImage'), async (req, res) => {
 
         await newBlog.save();
 
-        res.status(202).json({ data: newBlog });
+        res.status(202).json({ message: "Blog created successfully", data: newBlog });
     } catch (error) {
-        console.log(error)
+        console.error("Blog creation error:", error);
+        res.status(500).json({ error: "Something went wrong while creating the blog" });
     }
 });
 
@@ -41,7 +46,8 @@ const requireAuth = (req, res, next) => {
 
 blogRoute.get('/view', requireAuth, async (req, res) => {
     try {
-        const blogs = await Blog.find().populate('createdBy');
+        const currentUserId = req.user._id;
+        const blogs = await Blog.find({ createdBy: { $ne: currentUserId } }).populate('createdBy');
 
         if (!blogs) {
             return res.status(402).json({ error: "There is no blog available" })
@@ -87,13 +93,14 @@ blogRoute.delete('/:id', async (req, res) => {
 })
 
 blogRoute.put('/blog/:id', async (req, res) => {
+
     const { title, blog, blogImage } = req.body;
 
     try {
-        if(!title || !blog || !blogImage){
+        if (!title || !blog || !blogImage) {
             return res.status(401).send('Every field is required')
         }
-        const updateBlog = await Blog.findByIdAndUpdate(req.params.id, { title, blog, blogImage }, { new: true });
+        const updateBlog = await Blog.findByIdAndUpdate(req.params.id, { title, blog, blogImage }, { new: true }).lean();
         if (!updateBlog) {
             return res.status(404).json({ success: false, message: 'Blog not found' });
         }

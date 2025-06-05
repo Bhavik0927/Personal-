@@ -13,18 +13,25 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 authRouter.post("/signup", upload.single('profilePic'), async (req, res) => {
 
-    const { firstname, lastname, email, password } = req.body;
-
     try {
-        const result = await uploadToCloudinary(req.file.buffer, 'profile_pics');
-        // console.log('Uploaded URL:', result.secure_url);
+        const { firstname, lastname, email, password } = req.body;
 
-        const existUser = await User.findOne({ email });
-
-        if (existUser) {
-            return res.status(401).json({ message: "User is already exists" })
+        if (!firstname || !lastname || !email || !password || !req.file) {
+            return res.status(400).json({ message: "All fields including profilePic are required" });
         }
-        const hashPassword = await bcrypt.hash(password, 10);
+
+
+        // Check if user already exists early
+        const existUser = await User.findOne({ email });
+        if (existUser) {
+            return res.status(409).json({ message: "User already exists" }); // 409 = Conflict
+        }
+
+        const [hashPassword, result] = await Promise.all([
+            bcrypt.hash(password, 10),
+            uploadToCloudinary(req.file.buffer, 'profile_pics')
+        ]);
+
 
         const newUser = new User({
             firstname,
@@ -35,23 +42,36 @@ authRouter.post("/signup", upload.single('profilePic'), async (req, res) => {
         });
 
         await newUser.save();
-        res.status(200).send({ message: "User is created", newUser });
+
+        // Do not return password in response
+        const { password: _, ...userWithoutPassword } = newUser.toObject();
+
+
+        res.status(200).send({ message: "User is created", user: userWithoutPassword });
     } catch (error) {
         console.log(error);
     }
 })
 
 authRouter.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-    const existUser = await User.findOne({ email });
+        if (!email || !password) {
+            return res.status(400).json({ message: "Email and password are required" });
+        }
 
-    if (!existUser) {
-        return res.status(404).send({ message: "User is Not Exists" })
-    }
-    const comparePassword = await bcrypt.compare(password, existUser.password);
+        const existUser = await User.findOne({ email }).select('+password');
 
-    if (comparePassword) {
+        if (!existUser) {
+            return res.status(404).send({ message: "User is Not Exists" })
+        }
+        const comparePassword = await bcrypt.compare(password, existUser.password);
+
+        if (!comparePassword) {
+            return res.status(401).json({ message: "Invalid credentials" });
+        }
+
         const token = await jwt.sign({ _id: existUser._id }, process.env.SECRET_KEY, { expiresIn: '1d' });
 
         res.cookie("token", token, {
@@ -61,6 +81,10 @@ authRouter.post('/login', async (req, res) => {
             maxAge: 24 * 60 * 60 * 1000 // 1 day});
         })
         res.status(200).json({ message: "Login successfully", token: token, existUser });
+
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
 
 })

@@ -9,10 +9,9 @@ const EditBlog = () => {
 
     const { id } = useParams();
     const Navigate = useNavigate();
-    const blogs = useSelector((state) => state.blog.blog);
+    const blogs = useSelector((state) => state?.blog?.blog || []);
 
     const blogToEdit = blogs.find((b) => b._id === id);
-    console.log(blogToEdit);
 
 
     const [title, setTitle] = useState('');
@@ -26,6 +25,8 @@ const EditBlog = () => {
             setBlogImage(blogToEdit.blogImage);
         }
     }, [blogToEdit]);
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,7 +58,6 @@ const EditBlog = () => {
 
             toast.success("blog-data is updated...");
             Navigate('/myblogs')
-            console.log(res);
         } catch (error) {
             console.log(error);
         }
@@ -65,7 +65,7 @@ const EditBlog = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} style={{padding:'20px'}}>
+        <form onSubmit={handleSubmit} style={{ padding: '20px' }}>
 
             <div id="title_area">
                 <label htmlFor="title">Title</label>
