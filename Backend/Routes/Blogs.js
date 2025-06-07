@@ -3,6 +3,7 @@ import Blog from '../model/blogSchema.js';
 import multer from 'multer';
 import { uploadToCloudinary } from '../utils/Cloudinary.js';
 import User from '../model/userSchema.js';
+import mongoose from 'mongoose';
 
 const blogRoute = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
@@ -121,6 +122,10 @@ blogRoute.post('/saveblog', async (req, res) => {
         const blog = await Blog.findById(blogId);
         if (!blog) return res.status(404).json({ error: 'Blog not found' });
 
+        if (blog.createdBy.toString() === userId) {
+            return res.status(400).json({ error: "You cannot save your own blog" });
+        }
+
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ error: 'User not found' });
 
@@ -140,15 +145,40 @@ blogRoute.post('/saveblog', async (req, res) => {
 
 })
 
+blogRoute.post('/unsavedBlog', async (req, res) => {
+    const userId = req.user._id;
+    const { blogId } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(blogId)) {
+        return res.status(400).json({ error: 'Invalid blog ID' });
+    }
+
+    try {
+        const result = await User.updateOne(
+            {_id: userId},
+            { $pull: {saveBlogs:new mongoose.Types.ObjectId(blogId)}}
+        )
+
+        if (result.modifiedCount === 0) { return res.status(400).json({ message: 'Blog not in saved list' }); }
+
+        const updatedUser = await User.findById(userId).select('saveBlogs');
+
+        res.status(200).json({ message: 'Blog unsaved successfully', savedBlogs: updatedUser });
+
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 
 blogRoute.get('/savedBlogs', async (req, res) => {
     const userId = req.user._id;
     try {
         const user = await User.findById(userId).populate({
             path: 'saveBlogs',
-            populate:{
-                path:'createdBy',
-                select: 'firstname lastname email'
+            populate: {
+                path: 'createdBy',
+                select: 'firstname lastname email profilePic'
             }
         });
         if (!user) return res.status(404).json({ error: 'User not found' });

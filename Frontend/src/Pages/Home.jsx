@@ -54,6 +54,7 @@ const Home = () => {
                                     }
                                 </div>
                             </div>
+                            
                             <div className="right_container">
                                 <h2>Right side portion</h2>
                             </div>

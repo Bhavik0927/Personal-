@@ -1,6 +1,6 @@
 .main_container {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   padding: 0px 50px;
 }
 .left_container {
@@ -87,4 +87,5 @@
 }
 .right_container {
   width: 25%;
+  border-left: 1px solid rgb(238, 230, 230) ;
 }
