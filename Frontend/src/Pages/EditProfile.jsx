@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 const EditProfile = () => {
 
     const user = useSelector((state) => state?.user?.user);
-    console.log(user);
 
     const dispatch = useDispatch();
     const Navigate = useNavigate();
@@ -41,12 +40,13 @@ const EditProfile = () => {
                     },
                 });
 
-            console.log(res);
-            dispatch(addUser(res?.data?.user));
+            
+            dispatch(addUser(res?.data?.user) );
             toast.success('Update successfully...!! ');
-            Navigate('/home')
+            Navigate('/')
         } catch (error) {
-            console.log(error);
+            // console.log(error);
+            toast.error(error.message);
         } finally {
             setLoading(false);
         }

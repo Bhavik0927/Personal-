@@ -16,12 +16,14 @@ const Card = ({ props }) => {
 
     }
 
+    // console.log(props);
+
     return (
         <>
             <div className="main_card_info">
                 <div className="created_user_container">
                     <img className="created_user_icon" src={props?.createdBy?.profilePic} alt="" />
-                    <p className="created_user_name">{props?.createdBy?.firstname} {props.createdBy?.lastname}</p>
+                    <p className="created_user_name">In <span>{props?.subTitle}</span>  created by {props?.createdBy?.firstname} {props.createdBy?.lastname}</p>
                 </div>
                 <div className="main_content_container">
                     <h3 className="title">Today I Learned Something About My Boyfriend That No Girl Should Ever Have to   </h3>

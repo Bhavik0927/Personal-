@@ -11,20 +11,21 @@ const upload = multer({ storage: multer.memoryStorage() });
 blogRoute.post('/create', upload.single('blogImage'), async (req, res) => {
 
     try {
-        const { title, blog } = req.body;
+        const { title,subTitle, blog } = req.body;
         const userId = req.user._id;
 
-        if (!title || !blog || !req.file) {
+        if (!title ||!subTitle || !blog || !req.file) {
             return res.status(400).json({ error: 'Title, blog content, and image are required.' });
         }
 
         const result = await uploadToCloudinary(req.file.buffer, 'blog-pics');
 
-        if (!title || !blog) {
+        if (!title ||!subTitle || !blog) {
             return res.status(404).json({ error: 'Every field is mandatory' });
         }
         const newBlog = new Blog({
             title,
+            subTitle,
             blog,
             createdBy: userId,
             blogImage: result.secure_url,
@@ -96,13 +97,13 @@ blogRoute.delete('/:id', async (req, res) => {
 
 blogRoute.put('/blog/:id', async (req, res) => {
 
-    const { title, blog, blogImage } = req.body;
+    const { title,subTitle, blog, blogImage } = req.body;
 
     try {
-        if (!title || !blog || !blogImage) {
+        if (!title || !subTitle || !blog || !blogImage) {
             return res.status(401).send('Every field is required')
         }
-        const updateBlog = await Blog.findByIdAndUpdate(req.params.id, { title, blog, blogImage }, { new: true }).lean();
+        const updateBlog = await Blog.findByIdAndUpdate(req.params.id, { title,subTitle, blog, blogImage }, { new: true }).lean();
         if (!updateBlog) {
             return res.status(404).json({ success: false, message: 'Blog not found' });
         }

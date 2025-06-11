@@ -11,6 +11,11 @@ const BlogSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
+    subTitle:{
+        type:'String',
+        required:true,
+        unique:true
+    },
     blog:{
         type:'String',
         required:true,

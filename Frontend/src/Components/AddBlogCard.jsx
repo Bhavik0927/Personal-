@@ -9,7 +9,10 @@ import { toast } from 'react-toastify';
 
 const AddBlogCard = () => {
 
+
+
     const [title, setTitle] = useState('');
+    const [subTitle, setSubTitle] = useState('');
     const [blog, setBlog] = useState('');
     const [blogImage, setBlogImage] = useState(null);
     const [Loading, setLoading] = useState(false);
@@ -24,6 +27,7 @@ const AddBlogCard = () => {
         setLoading(true);
         const formData = new FormData();
         formData.append('title', title);
+        formData.append('subTitle', subTitle);
         formData.append('blog', blog);
         formData.append('blogImage', blogImage);
 
@@ -58,6 +62,15 @@ const AddBlogCard = () => {
                                 type="text"
                                 placeholder="Title for blog"
                                 onChange={(e) => setTitle(e.target.value)}
+                            />
+                        </div>
+                        <div id="title_area">
+                            <label htmlFor="title">Sub-Title</label>
+                            <input
+                                id="title"
+                                type="text"
+                                placeholder="Sub-title for blog"
+                                onChange={(e) => setSubTitle(e.target.value)}
                             />
                         </div>
                         <div id="blog_area">

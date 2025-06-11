@@ -11,7 +11,6 @@ const SaveBlogs = () => {
     const fetchSavedBlogs = async () => {
         try {
             const response = await axios.get('http://localhost:4000/savedBlogs', { withCredentials: true });
-            // console.log(response.data.savedBlogs);
             setSaveBlog(response.data.savedBlogs);
         } catch (error) {
             console.log(error);
@@ -19,10 +18,10 @@ const SaveBlogs = () => {
     }
 
     const removeBlog = async (blogId) => {
-        const response = await axios.post('http://localhost:4000/unsavedBlog', { blogId }, { withCredentials: true });
+        await axios.post('http://localhost:4000/unsavedBlog', { blogId }, { withCredentials: true });
 
         setSaveBlog(prev => prev.filter(blog => blog._id !== blogId));
-        console.log(response);
+        
     }
     useEffect(() => {
         fetchSavedBlogs();
@@ -66,4 +65,4 @@ const SaveBlogs = () => {
     )
 }
 
-export default SaveBlogs
+export default SaveBlogs;
