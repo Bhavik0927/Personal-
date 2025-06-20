@@ -97,13 +97,14 @@ blogRoute.delete('/:id', async (req, res) => {
 
 blogRoute.put('/blog/:id', async (req, res) => {
 
-    const { title, blog, blogImage } = req.body;
+    const { title,subtitle, blog, blogImage } = req.body;
 
     try {
-        if (!title || !blog || !blogImage) {
+        if (!title || !subtitle || !blog || !blogImage) {
             return res.status(401).send('Every field is required')
         }
-        const updateBlog = await Blog.findByIdAndUpdate(req.params.id, { title, blog, blogImage }, { new: true }).lean();
+        const updateBlog = await Blog.findByIdAndUpdate(req.params.id, { title,subtitle, blog, blogImage }, { new: true }).lean();
+        
         if (!updateBlog) {
             return res.status(404).json({ success: false, message: 'Blog not found' });
         }
@@ -192,5 +193,26 @@ blogRoute.get('/savedBlogs', async (req, res) => {
 
 })
 
+blogRoute.put('/like/:id',async(req,res) =>{
+    try {
+        const blog = await Blog.findById(req.params.id);
+        const userId = await req.user._id;
+        
+        console.log("blogID =>", blog);
+        console.log("userID =>", userId);
+
+        if(!blog.likes.includes(userId)){
+            blog.likes.push(userId)
+        }else{
+            blog.likes.pull(userId);
+        }
+
+        await blog.save();
+        res.status(200).json(blog);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({error:"Something went wrong"});
+    }
+})
 
 export default blogRoute;

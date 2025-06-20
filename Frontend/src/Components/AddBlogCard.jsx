@@ -6,7 +6,6 @@ import './AddBlogCard.css';
 import { toast } from 'react-toastify';
 
 
-
 const AddBlogCard = () => {
 
     const [title, setTitle] = useState('');
@@ -25,7 +24,7 @@ const AddBlogCard = () => {
         setLoading(true);
         const formData = new FormData();
         formData.append('title', title);
-        formData.append('subtitle',subtitle);
+        formData.append('subtitle', subtitle);
         formData.append('blog', blog);
         formData.append('blogImage', blogImage);
 

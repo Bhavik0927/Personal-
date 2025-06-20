@@ -9,7 +9,10 @@ import './EditProfile.css';
 const EditProfile = () => {
 
     const user = useSelector((state) => state?.user?.user);
+<<<<<<< HEAD
     // console.log(user);
+=======
+>>>>>>> 6271e3d (some minor changes)
 
     const dispatch = useDispatch();
     const Navigate = useNavigate();
@@ -42,12 +45,18 @@ const EditProfile = () => {
                     },
                 });
 
+<<<<<<< HEAD
             // console.log(res);
             dispatch(addUser(res?.data?.user));
+=======
+            
+            dispatch(addUser(res?.data?.user) );
+>>>>>>> 6271e3d (some minor changes)
             toast.success('Update successfully...!! ');
             Navigate('/')
         } catch (error) {
-            console.log(error);
+            // console.log(error);
+            toast.error(error.message);
         } finally {
             setLoading(false);
         }

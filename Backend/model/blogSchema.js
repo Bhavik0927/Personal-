@@ -23,7 +23,11 @@ const BlogSchema = new mongoose.Schema({
     createdBy:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
-    }
+    },
+    likes:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }]
 },{timestamps:true});
 
 const Blog = mongoose.model('Blog',BlogSchema);

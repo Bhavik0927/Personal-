@@ -13,7 +13,6 @@
 .card {
   display: flex;
   border-bottom: 1px solid rgb(238, 230, 230);
-  
   height: 14rem;
   justify-content: space-between;
   align-items: center;
@@ -28,10 +27,9 @@
 }
 
 .created_user_icon {
-  height: 1.5rem;
-  width: 1.5rem;
-  border: 1px solid gray;
-  border-radius: 10%;
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 15%;
 }
 
 .created_user_name .user_subtitle{
@@ -76,15 +74,22 @@
 .date_container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 0.5rem;
 }
+.date_heart_block{
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  cursor: pointer;
+}
+
 .date{
   color: rgb(129,124,115);
 }
 .star {
   color: rgb(255, 183, 1);
-  margin-right: 0.9rem;
+}
+.heart{
+  margin-top: 0.3rem;
 }
 .date_container .bookmark{
   font-size: 1.3rem;
