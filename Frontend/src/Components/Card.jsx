@@ -2,13 +2,20 @@ import { BsStars } from "react-icons/bs";
 import { CiBookmarkCheck } from "react-icons/ci";
 import axios from "axios";
 import { toast } from 'react-toastify';
-import '../Pages/home.css';
-import { GoHeart } from "react-icons/go";
+import './Card.css';
+import { GoHeartFill } from "react-icons/go";
 import { useState } from "react";
+import { useSelector } from 'react-redux';
+
 
 const Card = ({ props }) => {
+    
+    const user = useSelector(store => store?.user?.user);
 
-    const [likes, setLikes] = useState(props._id);
+    const [likes, setLikes] = useState([...props.likes]);
+
+    const isLiked = likes.includes(user?.existUser?._id);
+
 
     const savedBlog = async () => {
         try {
@@ -20,27 +27,22 @@ const Card = ({ props }) => {
 
     }
 
-    console.log(likes);
-
     const LikeIt = async (blogId) => {
         try {
             const response = await axios.put(`http://localhost:4000/like/${blogId}`, {}, { withCredentials: true });
-
-            console.log(response);
+            setLikes(response?.data.likes);
 
         } catch (error) {
             console.log(error)
         }
     }
-    console.log(props);
-    // console.log(props._id);
 
     return (
         <>
             <div className="main_card_info">
                 <div className="created_user_container">
                     <img className="created_user_icon" src={props?.createdBy?.profilePic} alt="" />
-                    <p className="created_user_name">In <span>{props?.subTitle}</span>  created by {props?.createdBy?.firstname} {props.createdBy?.lastname}</p>
+                    <p className="created_user_name">In <span>{props?.subtitle}</span>  created by {props?.createdBy?.firstname} {props.createdBy?.lastname}</p>
                 </div>
                 <div className="main_content_container">
                     <h3 className="title">Today I Learned Something About My Boyfriend That No Girl Should Ever Have to   </h3>
@@ -58,7 +60,10 @@ const Card = ({ props }) => {
                             })}
 
                         </p>
-                        <span onClick={() => LikeIt(props._id)}><GoHeart className="heart" /></span>
+                        <span onClick={() => LikeIt(props._id)} className="heart_container">
+                            <GoHeartFill className="heart" style={{ color: isLiked ? 'red' : 'gray' }} />
+                            {likes.length}
+                        </span>
                     </div>
                     <span className="bookmark" onClick={() => savedBlog()}> <CiBookmarkCheck /> </span>
                 </div>

@@ -11,7 +11,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 blogRoute.post('/create', upload.single('blogImage'), async (req, res) => {
 
     try {
-        const { title,subtitle, blog } = req.body;
+        const { title, subtitle, blog } = req.body;
         const userId = req.user._id;
 
         if (!title || !subtitle || !blog || !req.file) {
@@ -20,7 +20,7 @@ blogRoute.post('/create', upload.single('blogImage'), async (req, res) => {
 
         const result = await uploadToCloudinary(req.file.buffer, 'blog-pics');
 
-        if (!title || !subtitle ||  !blog) {
+        if (!title || !subtitle || !blog) {
             return res.status(404).json({ error: 'Every field is mandatory' });
         }
         const newBlog = new Blog({
@@ -83,6 +83,7 @@ blogRoute.get('/myblog', async (req, res) => {
 blogRoute.delete('/:id', async (req, res) => {
     try {
         const blog = await Blog.findById(req.params.id);
+
         if (!blog) return res.status(404).json({ message: 'Blog not found' });
         if (blog.createdBy.toString() !== req.user._id) {
             return res.status(404).json({ message: 'User is not authorized' })
@@ -97,14 +98,14 @@ blogRoute.delete('/:id', async (req, res) => {
 
 blogRoute.put('/blog/:id', async (req, res) => {
 
-    const { title,subtitle, blog, blogImage } = req.body;
+    const { title, subtitle, blog, blogImage } = req.body;
 
     try {
         if (!title || !subtitle || !blog || !blogImage) {
             return res.status(401).send('Every field is required')
         }
-        const updateBlog = await Blog.findByIdAndUpdate(req.params.id, { title,subtitle, blog, blogImage }, { new: true }).lean();
-        
+        const updateBlog = await Blog.findByIdAndUpdate(req.params.id, { title, subtitle, blog, blogImage }, { new: true }).lean();
+
         if (!updateBlog) {
             return res.status(404).json({ success: false, message: 'Blog not found' });
         }
@@ -157,8 +158,8 @@ blogRoute.post('/unsavedBlog', async (req, res) => {
 
     try {
         const result = await User.updateOne(
-            {_id: userId},
-            { $pull: {saveBlogs:new mongoose.Types.ObjectId(blogId)}}
+            { _id: userId },
+            { $pull: { saveBlogs: new mongoose.Types.ObjectId(blogId) } }
         )
 
         if (result.modifiedCount === 0) { return res.status(400).json({ message: 'Blog not in saved list' }); }
@@ -193,17 +194,14 @@ blogRoute.get('/savedBlogs', async (req, res) => {
 
 })
 
-blogRoute.put('/like/:id',async(req,res) =>{
+blogRoute.put('/like/:id', async (req, res) => {
     try {
         const blog = await Blog.findById(req.params.id);
-        const userId = await req.user._id;
-        
-        console.log("blogID =>", blog);
-        console.log("userID =>", userId);
+        const userId = req.user._id;
 
-        if(!blog.likes.includes(userId)){
+        if (!blog.likes.includes(userId)) {
             blog.likes.push(userId)
-        }else{
+        } else {
             blog.likes.pull(userId);
         }
 
@@ -211,7 +209,7 @@ blogRoute.put('/like/:id',async(req,res) =>{
         res.status(200).json(blog);
     } catch (error) {
         console.log(error);
-        res.status(400).json({error:"Something went wrong"});
+        res.status(400).send(error);
     }
 })
 

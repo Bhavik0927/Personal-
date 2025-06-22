@@ -13,8 +13,6 @@ const BlogSchema = new mongoose.Schema({
     },
     subtitle:{
         type:'String',
-        required:true,
-        unique:true
     },
     blog:{
         type:'String',
@@ -24,10 +22,8 @@ const BlogSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
-    likes:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
-    }]
+    likes:[{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+
 },{timestamps:true});
 
 const Blog = mongoose.model('Blog',BlogSchema);
