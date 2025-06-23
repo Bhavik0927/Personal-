@@ -42,6 +42,12 @@ const Home = () => {
                     data.length > 0 ? (
                         <div className="main_container">
                             <div className="left_container">
+                                <div className="feature_container">
+                                    <p className="feature_btn">+</p>
+                                    <p className="feature_btn">For you</p>
+                                    <p className="feature_btn">Following</p>
+                                    <p className="feature_btn">Featured</p>
+                                </div>
                                 <div className="Card_container" >
                                     {
                                         data.map((e, _) => {
@@ -54,7 +60,7 @@ const Home = () => {
                                     }
                                 </div>
                             </div>
-                            
+
                             <div className="right_container">
                                 <h2>Right side portion</h2>
                             </div>
