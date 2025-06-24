@@ -29,7 +29,7 @@ const AddBlogCard = () => {
         formData.append('blogImage', blogImage);
 
         try {
-            const res = await axios.post('http://localhost:4000/create', formData, {
+            await axios.post('http://localhost:4000/create', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }, withCredentials: true,

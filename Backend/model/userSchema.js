@@ -26,12 +26,20 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        saveBlogs:[
+        saveBlogs: [
             {
-                type:mongoose.Schema.Types.ObjectId,
-                ref:'Blog'
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Blog'
             }
-        ]
+        ],
+        followers: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }],
+        following: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }]
     }, { timestamps: true }
 );
 

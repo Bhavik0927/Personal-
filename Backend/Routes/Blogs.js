@@ -20,9 +20,6 @@ blogRoute.post('/create', upload.single('blogImage'), async (req, res) => {
 
         const result = await uploadToCloudinary(req.file.buffer, 'blog-pics');
 
-        if (!title || !subtitle || !blog) {
-            return res.status(404).json({ error: 'Every field is mandatory' });
-        }
         const newBlog = new Blog({
             title,
             subtitle,
@@ -79,6 +76,19 @@ blogRoute.get('/myblog', async (req, res) => {
     }
 });
 
+// Get blog By Id
+blogRoute.get('/blog/:id' ,async(req,res) =>{
+    try{
+        const blog = await Blog.findById(req.params.id).populate('createdBy', 'firstname lastname email profilePic');
+        if (!blog) {
+            return res.status(404).json({ message: "Blog not found" });
+        }
+        res.status(200).json({data:blog});
+    }catch(err){
+        console.log(err);
+        res.status(400).send(err)
+    }
+})
 
 blogRoute.delete('/:id', async (req, res) => {
     try {
@@ -210,6 +220,22 @@ blogRoute.put('/like/:id', async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(400).send(error);
+    }
+})
+
+blogRoute.put('/follow/:id',async(req,res) =>{
+    const current_user = req.user._id;
+    const target_user = req.params.id;
+    console.log(target_user);
+
+    try {
+        if(current_user.following.includes(target_user)){
+            
+        }else{
+
+        }
+    } catch (error) {
+        console.log(error);
     }
 })
 

@@ -24,7 +24,7 @@ app.use(cookieParser());
 
 app.use('/',authRouter);
 app.use('/',AuthMiddleware,profileRoute);
-app.use('/',AuthMiddleware ,blogRoute);
+app.use('/',AuthMiddleware,blogRoute);
 
 app.listen(PORT, () => {
     connectDB();

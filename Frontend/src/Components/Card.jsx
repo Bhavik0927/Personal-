@@ -6,6 +6,7 @@ import './Card.css';
 import { FaHandsClapping } from "react-icons/fa6";
 import { useState } from "react";
 import { useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
 
 
 const Card = ({ props }) => {
@@ -36,6 +37,10 @@ const Card = ({ props }) => {
             console.log(error)
         }
     }
+    // console.log(props);
+    const firstName = props?.createdBy?.firstname.toLowerCase();
+    const lastName = props?.createdBy?.lastname.toLowerCase();
+    const title = props.title.split(' ').join('-')
 
     return (
         <>
@@ -51,11 +56,12 @@ const Card = ({ props }) => {
 
 
                 <div className="main_content_container">
-                    <div className="content_block">
-
-                        <h3 className="title">Today I Learned Something About My Boyfriend That No Girl Should Ever Have to   </h3>
-                        <p className="paragraph">For the writer who doesn’t think they have anything to offer   and why you’re dead wrong
-                        </p>
+                    <div className="content_block" >
+                        <Link to={`/@${firstName}${lastName}/${title}/${props._id}`}>
+                            <h3 className="title">Today I Learned Something About My Boyfriend That No Girl Should Ever Have to   </h3>
+                            <p className="paragraph">For the writer who doesn’t think they have anything to offer  and why you're dead wrong
+                            </p>
+                        </Link>
                     </div>
                     <div className="blog_image">
                         <img src={props?.blogImage} alt="" />

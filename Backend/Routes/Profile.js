@@ -57,4 +57,5 @@ profileRoute.put('/profile/edit', upload.single('profilePic'), async (req, res) 
 })
 
 
+
 export default profileRoute;
