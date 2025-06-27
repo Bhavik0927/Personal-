@@ -67,7 +67,7 @@ const FullBlog = () => {
 
                         {showCard1 && (
                             <div className='hover_popup1'>
-                                <PopupCard blog={blog} />
+                                <PopupCard blog={blog} className="hover_popup1" />
                             </div>
 
                         )}
